@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: nutrimbg-postgres
+    environment:
+      POSTGRES_USER: nutrimbg
+      POSTGRES_PASSWORD: nutrimbg
+      POSTGRES_DB: nutrimbg
+    ports:
+      - "5432:5432"
+    volumes:
+      - nutrimbg_pgdata:/var/lib/postgresql/data
+
+volumes:
+  nutrimbg_pgdata:

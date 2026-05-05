@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+*.dist-info/
+.venv/
+.env
+.env.*
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Node
+node_modules/
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
