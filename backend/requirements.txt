@@ -2,8 +2,13 @@ fastapi
 uvicorn[standard]
 pydantic-settings
 sqlalchemy[asyncio]
+aiosqlite
 asyncpg
 python-jose[cryptography]
 passlib[bcrypt]
 python-multipart
 httpx
+pytest
+pandas
+scikit-learn
+joblib

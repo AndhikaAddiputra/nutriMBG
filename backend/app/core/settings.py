@@ -15,7 +15,12 @@ class Settings(BaseSettings):
     jwt_secret: str = "change-me"
     jwt_exp_hours: int = 8
     openai_api_key: Optional[str] = None
+    gemini_api_key: Optional[str] = None
+    gemini_model: str = "gemini-2.5-flash"
+    gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta"
     ollama_host: str = "http://localhost:11434"
+    dataset_dir: str = str(ROOT_DIR / "dataset")
+    classifier_model_path: str = str(ROOT_DIR / "backend" / "artifacts" / "classifier.joblib")
 
     model_config = SettingsConfigDict(env_file=ENV_FILE, env_file_encoding="utf-8")
 
