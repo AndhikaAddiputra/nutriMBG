@@ -12,6 +12,9 @@ class Settings(BaseSettings):
     app_name: str = "NutriMBG API"
     environment: str = "local"
     database_url: str = "postgresql+asyncpg://nutrimbg:nutrimbg@localhost:5432/nutrimbg"
+    redis_url: Optional[str] = None
+    rate_limit_backend: str = "auto"
+    rate_limit_limit: int = 100
     jwt_secret: str = "change-me"
     jwt_exp_hours: int = 8
     openai_api_key: Optional[str] = None
