@@ -63,9 +63,6 @@ Frontend (Streamlit):
     - `GET /api/v1/reference/foods?kabupaten=Kabupaten%20Bandung`
 
 ## Endpoint AI (Gemini)
-- `POST /api/menu/parse` body: `{"text":"nasi, ayam goreng, bayam"}`
-- `POST /api/menu/recommend` body: `{"deficiencies":{"fiber":"Defisien"}, "local_catalog":["bayam","wortel"], "count":2}`
-- `POST /api/menu/analyze` body: `{"text":"nasi, ayam goreng, bayam", "education_level":"SMP"}`
 - `POST /api/v1/ai/parse` body: `{"text":"nasi, ayam goreng, bayam"}`
 - `POST /api/v1/ai/recommend` body: `{"deficiencies":{"fiber":"Defisien"}, "local_catalog":["bayam","wortel"], "count":2}`
 - `POST /api/v1/ai/classify` body: `{"text":"nasi, ayam goreng, bayam", "education_level":"SMP"}`
