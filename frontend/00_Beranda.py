@@ -17,7 +17,6 @@ st.markdown("""
         #MainMenu {visibility: hidden;}
         header {visibility: hidden;}
         footer {visibility: hidden;}
-        /* Memastikan footer custom tetap di bawah */
         .custom-footer {
             text-align: center;
             color: #6c757d;

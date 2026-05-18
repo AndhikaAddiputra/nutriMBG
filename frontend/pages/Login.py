@@ -1,31 +1,71 @@
 import streamlit as st
+import time
+from utils.session import save_session, check_auth_redirect, get_redirect_target, manage_sidebar_visibility
+from utils.api import login, AuthError
 
-st.set_page_config(page_title="Login | NutriMBG", page_icon="🔒", layout="centered")
+st.set_page_config(page_title="Login | NutriMBG", page_icon="🔐", layout="centered")
+manage_sidebar_visibility()
 
-selected_role = st.session_state.get("login_role_preselect", "koordinator")
+check_auth_redirect()
 
-if st.button("← Kembali ke Beranda"):
-    st.switch_page("00_Beranda.py")
+st.markdown("<h2 style='text-align: center;'>Masuk ke NutriMBG</h2>", unsafe_allow_html=True)
 
-st.title("Masuk ke NutriMBG")
-st.markdown(f"Silakan masukkan kredensial Anda untuk masuk sebagai **{selected_role.capitalize()}**.")
+preselect_val = st.session_state.get("login_role_preselect", "koordinator")
+default_idx = 0 if preselect_val == "koordinator" else 1
+
+st.markdown("<div style='text-align:center; margin-bottom: 10px;'>Pilih Peran Akses:</div>", unsafe_allow_html=True)
+selected_tab = st.radio(
+    "Peran", 
+    ["👨‍🏫 Koordinator", "⚙️ Administrator"], 
+    index=default_idx, 
+    horizontal=True,
+    label_visibility="collapsed"
+)
+
+if "Koordinator" in selected_tab:
+    active_role = "koordinator"
+    accent_color = "#28a745"
+    btn_label = "Masuk sebagai Koordinator"
+    demo_hint = "Hint: koor@nutrimbg.go.id | pass: koor123"
+else:
+    active_role = "administrator"
+    accent_color = "#007bff"
+    btn_label = "Masuk sebagai Administrator"
+    demo_hint = "Hint: admin@nutrimbg.go.id | pass: admin123"
+
+st.markdown(f"""
+    <style>
+        div[data-testid="stForm"] {{
+            border-top: 4px solid {accent_color} !important;
+            border-radius: 10px;
+        }}
+    </style>
+""", unsafe_allow_html=True)
 
 with st.form("login_form"):
-    username = st.text_input("Username", placeholder="Masukkan username Anda")
-    password = st.text_input("Password", type="password", placeholder="Masukkan password Anda")
+    st.markdown(f"#### {selected_tab}")
+    email_input = st.text_input("Alamat Email", placeholder="contoh@nutrimbg.go.id")
+    pass_input = st.text_input("Kata Sandi", type="password")
     
-    submitted = st.form_submit_button("Masuk", use_container_width=True)
+    submit_btn = st.form_submit_button(btn_label, use_container_width=True)
 
-    if submitted:
-        # Nanti kamu bisa mengganti bagian ini dengan query ke database/API yang sesungguhnya
-        if username == "admin" and password == "12345":
-            st.success("Login berhasil! Memuat dashboard...")
+    if submit_btn:
+        try:
+            res = login(email_input, pass_input, active_role)
+            save_session(
+                token=res['token'],
+                user_id=res['user']['id'],
+                role=active_role,
+                name=res['user']['name'],
+                district=res['user']['district']
+            )
             
-            st.session_state["user_role"] = selected_role
+            target_path = get_redirect_target(active_role)
+            st.switch_page(target_path)
             
-            if selected_role == "koordinator":
-                st.switch_page("pages/GiziMeter.py") 
-            elif selected_role == "administrator":
-                st.switch_page("pages/GiziMeter.py")
-        else:
-            st.error("Username atau password salah! (Hint: gunakan admin / 12345)")
+        except AuthError as e:
+            st.error(f"❌ Login Gagal: {str(e)}")
+
+st.caption(demo_hint) # Baris ini dihapus saat di production
+
+st.info("Lupa kata sandi? Hubungi administrator wilayah Anda.")
