@@ -3,6 +3,8 @@ from typing import Any, Dict, List, Optional
 
 import requests
 import streamlit as st
+from utils.session import manage_sidebar_visibility
+from components.top_bar import render_top_bar
 
 
 API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000")
@@ -109,7 +111,14 @@ def label_deficiency(intake: float, target: float) -> str:
     return "Defisien"
 
 
-st.set_page_config(page_title="NutriMBG", layout="wide")
+st.set_page_config(page_title="NutriMBG", page_icon="🥗", layout="centered", initial_sidebar_state="collapsed")
+manage_sidebar_visibility()
+
+if "user_role" not in st.session_state or not st.session_state["user_role"]:
+    st.warning("Anda tidak memiliki akses ke halaman ini. Silakan login kembali.")
+    st.stop()
+
+render_top_bar()
 
 st.title("NutriMBG")
 st.write("Prototype validasi dan rekomendasi gizi untuk MBG.")
