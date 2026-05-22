@@ -12,3 +12,5 @@ pytest
 pandas
 scikit-learn
 joblib
+reportlab
+matplotlib
