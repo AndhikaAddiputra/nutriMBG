@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 
 from app.ai.generator import generate_menu_alternatives
 from app.ai.parser import parse_menu
+from app.api.dependencies import check_rate_limit
 from app.ml.classifier import predict_score
 from app.ml.nutrition import (
     compute_ratios,
@@ -19,10 +20,10 @@ from app.schemas.ai import (
     RecommendResponse,
 )
 
-router = APIRouter(prefix="/api/v1/ai", tags=["ai"])
+router = APIRouter(tags=["ai"])
 
 
-@router.post("/parse", response_model=ParseMenuResponse)
+@router.post("/parse", response_model=ParseMenuResponse, dependencies=[Depends(check_rate_limit)])
 async def parse_menu_endpoint(payload: ParseMenuRequest) -> ParseMenuResponse:
     try:
         items = await parse_menu(payload.text)
@@ -31,7 +32,7 @@ async def parse_menu_endpoint(payload: ParseMenuRequest) -> ParseMenuResponse:
     return ParseMenuResponse(items=items)
 
 
-@router.post("/recommend", response_model=RecommendResponse)
+@router.post("/recommend", response_model=RecommendResponse, dependencies=[Depends(check_rate_limit)])
 async def recommend_menu_endpoint(payload: RecommendRequest) -> RecommendResponse:
     try:
         recommendations = await generate_menu_alternatives(
@@ -44,7 +45,8 @@ async def recommend_menu_endpoint(payload: RecommendRequest) -> RecommendRespons
     return RecommendResponse(recommendations=recommendations)
 
 
-@router.post("/classify", response_model=ClassifyMenuResponse)
+@router.post("/analyze", response_model=ClassifyMenuResponse, dependencies=[Depends(check_rate_limit)])
+@router.post("/classify", response_model=ClassifyMenuResponse, dependencies=[Depends(check_rate_limit)])
 async def classify_menu_endpoint(payload: ClassifyMenuRequest) -> ClassifyMenuResponse:
     level = payload.education_level.strip().upper()
     if level not in ("SD", "SMP", "SMA"):
