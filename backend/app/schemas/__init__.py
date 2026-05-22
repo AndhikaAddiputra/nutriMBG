@@ -8,4 +8,6 @@ __all__ = [
     "ParseMenuResponse",
     "RecommendRequest",
     "RecommendResponse",
+    "TrendDataPoint",
+    "TrendResponse",
 ]
