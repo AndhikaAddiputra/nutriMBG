@@ -47,7 +47,7 @@ def logout():
 
 def get_redirect_target(role):
     if role == "koordinator":
-        return "pages/GiziMeter.py"
+        return "app.py"
     elif role == "administrator":
         return "pages/Dashboard.py"
     return None
