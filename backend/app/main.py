@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from app.api.ai import router as ai_router
 from app.api.health import router as health_router
+from app.api.history import router as history_router
 from app.api.menu import router as menu_router
 from app.api.reference import router as reference_router
 from app.api.reports import router as reports_router
@@ -17,6 +18,7 @@ app.include_router(menu_router, prefix="/api/menu")
 
 app.include_router(ai_router)
 app.include_router(reports_router)
+app.include_router(history_router)
 
 @app.get("/")
 def root() -> dict:
