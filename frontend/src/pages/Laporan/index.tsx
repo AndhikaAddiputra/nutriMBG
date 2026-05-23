@@ -105,7 +105,7 @@ export default function Laporan() {
     const allDates = [...new Set(trendData.flatMap(t => t.data.map(d => d.date)))].sort();
 
     return allDates.map(date => {
-      const point: Record<string, string | number | boolean> = { date: dayjs(date).format('DD MMM') };
+      const point: Record<string, string | number | boolean | null> = { date: dayjs(date).format('DD MMM') };
       trendData.forEach(series => {
         const found = series.data.find(d => d.date === date);
         point[series.component] = found ? found.score : null;
