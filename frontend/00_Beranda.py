@@ -71,7 +71,7 @@ else:
     st.success(f"Anda saat ini telah masuk ke dalam sistem sebagai **{role_aktif.title()}**.")
     
     if st.button("🚀 Buka Dashboard Saya", use_container_width=True, type="primary"):
-        st.switch_page("pages/GiziMeter.py")
+        st.switch_page("app.py")
 
 st.divider()
 

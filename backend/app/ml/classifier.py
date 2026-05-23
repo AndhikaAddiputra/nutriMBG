@@ -5,6 +5,7 @@ from typing import Dict, List
 import joblib
 
 from app.core.settings import settings
+from app.ml.nutrition import compute_score
 
 
 @lru_cache(maxsize=1)
@@ -29,11 +30,19 @@ def _build_features(ratios: Dict[str, float], feature_columns: List[str]) -> Lis
 
 
 def predict_score(ratios: Dict[str, float]) -> float:
-    bundle = _load_bundle()
+    try:
+        bundle = _load_bundle()
+    except FileNotFoundError:
+        return compute_score(ratios)
+
     model = bundle.get("model")
     feature_columns = bundle.get("features", [])
     if model is None or not feature_columns:
-        raise RuntimeError("Model classifier tidak valid. Jalankan ulang proses training.")
-    row = _build_features(ratios, list(feature_columns))
-    score = model.predict([row])[0]
-    return float(score)
+        return compute_score(ratios)
+
+    try:
+        row = _build_features(ratios, list(feature_columns))
+        score = model.predict([row])[0]
+        return float(score)
+    except Exception:
+        return compute_score(ratios)

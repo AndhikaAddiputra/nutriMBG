@@ -27,5 +27,29 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=ENV_FILE, env_file_encoding="utf-8")
 
+    def __init__(self, **values):
+        super().__init__(**values)
+        self.dataset_dir = self._resolve_directory(self.dataset_dir, ROOT_DIR / "dataset")
+        self.classifier_model_path = self._resolve_file(self.classifier_model_path, ROOT_DIR / "backend" / "artifacts" / "classifier.joblib")
+
+    @staticmethod
+    def _looks_placeholder(value: str) -> bool:
+        normalized = value.strip().lower().replace("\\", "/")
+        return normalized.startswith("/path/to/") or normalized.startswith("c:/path/to/") or "/path/to/" in normalized
+
+    @classmethod
+    def _resolve_directory(cls, value: str, fallback: Path) -> str:
+        if not value or cls._looks_placeholder(value):
+            return str(fallback)
+        path = Path(value)
+        return str(path if path.exists() else fallback)
+
+    @classmethod
+    def _resolve_file(cls, value: str, fallback: Path) -> str:
+        if not value or cls._looks_placeholder(value):
+            return str(fallback)
+        path = Path(value)
+        return str(path if path.exists() else fallback)
+
 
 settings = Settings()

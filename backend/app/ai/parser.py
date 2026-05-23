@@ -1,6 +1,11 @@
 from typing import Dict, List
+import logging
 
 from app.ai.gemini_client import GeminiClient
+
+
+class ManualInputRequired(RuntimeError):
+    """Raised when automatic parsing cannot proceed and manual input is required."""
 
 
 async def parse_menu(text: str) -> List[Dict[str, float]]:
@@ -11,7 +16,14 @@ async def parse_menu(text: str) -> List[Dict[str, float]]:
         "Jika berat tidak disebutkan, gunakan estimasi porsi standar 100 gram.\n"
         f"Input menu: {text}"
     )
-    payload = await client.generate_json(prompt)
+    try:
+        payload = await client.generate_json(prompt)
+    except RuntimeError as exc:
+        logging.warning("Gemini client failed: %s", exc)
+        raise ManualInputRequired("Automatic parsing failed due to external AI error; manual input required.") from exc
+
     if not isinstance(payload, list):
-        raise ValueError("Format JSON parser tidak valid. Harus berupa array.")
+        logging.warning("Gemini returned non-list payload: %r", payload)
+        raise ManualInputRequired("Automatic parsing returned unexpected format; manual input required.")
+
     return payload
