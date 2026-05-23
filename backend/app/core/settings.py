@@ -38,7 +38,12 @@ class Settings(BaseSettings):
     @classmethod
     def parse_cors_origins(cls, v: object) -> object:
         if isinstance(v, str):
-            return json.loads(v)
+            v = v.strip()
+            if v.startswith("["):
+                return json.loads(v)
+            if "," in v:
+                return [x.strip() for x in v.split(",") if x.strip()]
+            return [v]
         return v
 
     model_config = SettingsConfigDict(env_file=ENV_FILE, env_file_encoding="utf-8")
