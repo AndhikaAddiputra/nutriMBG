@@ -1,0 +1,85 @@
+INFO:     Will watch for changes in these directories: ['/Users/folfox/dev/tubes/nutriMBG/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [82600] using WatchFiles
+INFO:     Started server process [82603]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:59242 - "GET /api/v1/reference/kabupatens HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59245 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+/Users/folfox/dev/tubes/nutriMBG/backend/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but RandomForestRegressor was fitted with feature names
+  warnings.warn(
+INFO:     127.0.0.1:59247 - "POST /api/v1/ai/classify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59273 - "OPTIONS /api/v1/reference/kabupatens HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59273 - "GET /api/v1/reference/kabupatens HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59273 - "OPTIONS /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59273 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59292 - "OPTIONS /api/v1/ai/classify HTTP/1.1" 200 OK
+/Users/folfox/dev/tubes/nutriMBG/backend/.venv/lib/python3.9/site-packages/sklearn/utils/validation.py:2739: UserWarning: X does not have valid feature names, but RandomForestRegressor was fitted with feature names
+  warnings.warn(
+INFO:     127.0.0.1:59292 - "POST /api/v1/ai/classify HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59292 - "OPTIONS /api/v1/reference/foods?kabupaten=Kabupaten+Bandung HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59292 - "GET /api/v1/reference/foods?kabupaten=Kabupaten+Bandung HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59292 - "OPTIONS /api/v1/ai/recommend HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59292 - "POST /api/v1/ai/recommend HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:59491 - "OPTIONS /api/v1/history/trend?days=28&component=all&education_level=SMP HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59491 - "GET /api/v1/history/trend?days=28&component=all&education_level=SMP HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59499 - "OPTIONS /reports/weekly?week_start=2026-05-18&sppg_name=SPPG+Jakarta HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59499 - "GET /reports/weekly?week_start=2026-05-18&sppg_name=SPPG+Jakarta HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59578 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59648 - "GET /api/v1/history/trend?days=28&component=all&education_level=SMP HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59648 - "GET /api/v1/history/trend?days=28&component=all&education_level=SMP HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59648 - "GET /api/v1/history/trend?days=28&component=all&education_level=SMP HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59648 - "OPTIONS /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59648 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59648 - "OPTIONS /api/v1/reference/kabupatens HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59648 - "GET /api/v1/reference/kabupatens HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59648 - "GET /api/v1/history/trend?days=28&component=all&education_level=SMP HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59683 - "OPTIONS /api/v1/history/trend?days=28&component=all&education_level=SD_1_3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59683 - "GET /api/v1/history/trend?days=28&component=all&education_level=SD_1_3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59683 - "OPTIONS /api/v1/history/trend?days=7&component=all&education_level=SD_1_3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59683 - "GET /api/v1/history/trend?days=7&component=all&education_level=SD_1_3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59685 - "OPTIONS /api/v1/history/trend?days=14&component=all&education_level=SD_1_3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59685 - "GET /api/v1/history/trend?days=14&component=all&education_level=SD_1_3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59685 - "GET /api/v1/history/trend?days=7&component=all&education_level=SD_1_3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59685 - "GET /api/v1/history/trend?days=7&component=all&education_level=SD_1_3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59813 - "GET /api/v1/history/trend?days=7&component=all&education_level=SD_1_3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59813 - "OPTIONS /reports/weekly?week_start=2026-05-18&sppg_name=SPPG+Kabupaten+Bandung&district=Kabupaten+Bandung HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59813 - "GET /reports/weekly?week_start=2026-05-18&sppg_name=SPPG+Kabupaten+Bandung&district=Kabupaten+Bandung HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59878 - "GET /api/v1/history/trend?days=7&component=all&education_level=SD_1_3 HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'scripts/seed_mock_analyses.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [82603]
+INFO:     Started server process [84714]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:59953 - "GET /api/v1/history/trend?days=28&component=all&education_level=SMP HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59960 - "GET /api/v1/history/trend?days=28&component=composite&education_level=SMP HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60228 - "OPTIONS /api/v1/history/trend?days=7&component=all&education_level=SD_1_3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60228 - "GET /api/v1/history/trend?days=7&component=all&education_level=SD_1_3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60279 - "OPTIONS /reports/weekly?week_start=2026-05-17&sppg_name=SPPG+Kabupaten+Bandung&district=Kabupaten+Bandung HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60279 - "GET /reports/weekly?week_start=2026-05-17&sppg_name=SPPG+Kabupaten+Bandung&district=Kabupaten+Bandung HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60285 - "GET /api/v1/history/trend?days=7&component=all&education_level=SD_1_3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60294 - "GET /api/v1/history/trend?days=7&component=all&education_level=SD_1_3 HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'app/utils/pdf_generator.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [84714]
+INFO:     Started server process [85528]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'app/utils/pdf_generator.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [85528]
+INFO:     Started server process [85570]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [85570]
+INFO:     Stopping reloader process [82600]

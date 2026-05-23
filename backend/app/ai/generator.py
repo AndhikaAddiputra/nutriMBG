@@ -1,6 +1,6 @@
 from typing import Dict, List
 
-from app.ai.gemini_client import GeminiClient
+from app.ai import get_ai_client
 
 
 async def generate_menu_alternatives(
@@ -8,7 +8,7 @@ async def generate_menu_alternatives(
     local_catalog: List[str],
     count: int = 3,
 ) -> List[str]:
-    client = GeminiClient()
+    client = get_ai_client()
     prompt = (
         "Kamu adalah generator rekomendasi menu bergizi seimbang.\n"
         "Gunakan hanya bahan dari katalog lokal yang diberikan.\n"

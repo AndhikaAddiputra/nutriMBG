@@ -10,7 +10,8 @@ from app.core.settings import settings
 NUTRIENTS = ["protein", "carbohydrate", "fat", "fiber", "iron", "vitamin_a"]
 
 AKG_LEVELS = {
-    "SD": ["7-9 tahun", "10-12 tahun"],
+    "SD_1_3": ["7-9 tahun"],
+    "SD_4_6": ["10-12 tahun"],
     "SMP": ["13-15 tahun"],
     "SMA": ["16-18 tahun"],
 }

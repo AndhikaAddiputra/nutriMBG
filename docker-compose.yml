@@ -13,5 +13,48 @@ services:
     volumes:
       - nutrimbg_pgdata:/var/lib/postgresql/data
 
+  redis:
+    image: redis:7-alpine
+    container_name: nutrimbg-redis
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: nutrimbg-backend
+    depends_on:
+      - postgres
+      - redis
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://nutrimbg:nutrimbg@postgres:5432/nutrimbg
+      REDIS_URL: redis://redis:6379/0
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/artifacts:/app/artifacts
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: nutrimbg-frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:80" # Mapping build output (nginx 80) to 3000
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: nutrimbg-nginx
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+
 volumes:
   nutrimbg_pgdata:

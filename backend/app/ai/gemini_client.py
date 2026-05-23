@@ -2,19 +2,26 @@ from typing import Any, Dict, List
 
 import httpx
 
+from app.ai.base import BaseAIClient
+from app.ai.cache import get_ai_cache
 from app.ai.utils import extract_json_payload
 from app.core.settings import settings
 
 
-class GeminiClient:
+class GeminiClient(BaseAIClient):
     def __init__(self) -> None:
         if not settings.gemini_api_key:
             raise RuntimeError("GEMINI_API_KEY belum diatur.")
         self.api_key = settings.gemini_api_key
         self.model = settings.gemini_model
         self.base_url = settings.gemini_base_url.rstrip("/")
+        self._cache = get_ai_cache()
 
     async def generate(self, prompt: str) -> str:
+        cached = self._cache.get(prompt)
+        if cached is not None:
+            return cached
+
         url = f"{self.base_url}/models/{self.model}:generateContent"
         payload: Dict[str, Any] = {
             "contents": [{"parts": [{"text": prompt}]}],
@@ -48,6 +55,8 @@ class GeminiClient:
         text = parts[0].get("text", "")
         if not text:
             raise RuntimeError("Gemini mengembalikan konten kosong.")
+
+        self._cache.set(prompt, text)
         return text
 
     async def generate_json(self, prompt: str) -> Any:

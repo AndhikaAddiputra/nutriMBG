@@ -1,0 +1,162 @@
+[
+  {
+    "scenario": "Seimbang - Nasi + Ayam + Sayur + Buah",
+    "education_level": "SMP",
+    "text": "Nasi putih 150 gram, ayam goreng 100 gram, tumis kangkung 50 gram, wortel 30 gram, tempe goreng 50 gram, pisang 50 gram",
+    "expected_score_range": [30, 55],
+    "observed_score": 42.8,
+    "notes": "Menu standar MBG: karbo + protein hewani + protein nabati + sayur + buah. Skor sedang karena rasio per nutrient terhadap AKG remaja masih di bawah 100%."
+  },
+  {
+    "scenario": "Seimbang - Ikan + Sayur Hijau + Karbo",
+    "education_level": "SMA",
+    "text": "Nasi merah 200 gram, ikan lele goreng 100 gram, bayam rebus 75 gram, tahu goreng 50 gram, semangka 100 gram",
+    "expected_score_range": [25, 50],
+    "observed_score": 32.5,
+    "notes": "Variasi protein hewani ikan + sayur hijau. Skor moderat karena target AKG SMA lebih tinggi."
+  },
+  {
+    "scenario": "Defisien Protein - Karbo Dominan",
+    "education_level": "SD_4_6",
+    "text": "Nasi putih 250 gram, bubur ayam 200 gram, kerupuk 20 gram, teh manis 200 ml",
+    "expected_score_range": [10, 50],
+    "observed_score": 34.2,
+    "notes": "Terlalu banyak karbo, protein rendah. Bubur ayam mengandung sedikit protein sehingga skor masih di kisaran rendah."
+  },
+  {
+    "scenario": "Defisien Serat & Zat Besi",
+    "education_level": "SMP",
+    "text": "Nasi putih 200 gram, ayam goreng tepung 150 gram, telur dadar 100 gram, susu UHT 200 ml, puding 100 gram",
+    "expected_score_range": [5, 25],
+    "observed_score": 8.9,
+    "notes": "Tinggi protein dan lemak, tapi tanpa sayur = serat 0, zat besi rendah. Skor sangat rendah."
+  },
+  {
+    "scenario": "Sayur Berlebihan - Protein Kurang",
+    "education_level": "SD_1_3",
+    "text": "Nasi putih 100 gram, capcay 200 gram, sup sayur 150 gram, kangkung rebus 100 gram, wortel 50 gram, bayam 50 gram",
+    "expected_score_range": [25, 50],
+    "observed_score": 37.6,
+    "notes": "Terlalu banyak sayur (serat + vit A tinggi) tapi protein kurang. Serat tinggi, vit A tinggi, tapi protein rendah."
+  },
+  {
+    "scenario": "Minimalis - Satu Lauk + Nasi",
+    "education_level": "SMA",
+    "text": "Nasi putih 200 gram, telur balado 2 butir",
+    "expected_score_range": [20, 45],
+    "observed_score": 31.8,
+    "notes": "Menu sederhana: protein cukup dari telur, tapi kurang serat & vitamin."
+  },
+  {
+    "scenario": "Tinggi Serat & Vitamin (Vegetarian)",
+    "education_level": "SMP",
+    "text": "Nasi merah 200 gram, tempe orek 75 gram, tahu bacem 75 gram, tumis bayam 100 gram, wortel 50 gram, kangkung 50 gram, buah pepaya 100 gram",
+    "expected_score_range": [40, 70],
+    "observed_score": 53.4,
+    "notes": "Menu nabati lengkap: serat tinggi, zat besi dari bayam + tempe. Skor tertinggi untuk menu non-ekstrem."
+  },
+  {
+    "scenario": "Menu Anak SD Kelas 1-3 (Porsi Kecil)",
+    "education_level": "SD_1_3",
+    "text": "Nasi putih 100 gram, ayam kecap 50 gram, sup wortel kentang 75 gram, pisang 50 gram, susu 150 ml",
+    "expected_score_range": [30, 55],
+    "observed_score": 39.8,
+    "notes": "Porsi sesuai anak kecil, variasi lengkap."
+  },
+  {
+    "scenario": "Menu Anak SD Kelas 4-6",
+    "education_level": "SD_4_6",
+    "text": "Nasi putih 150 gram, ikan goreng 75 gram, tumis kacang panjang 50 gram, wortel rebus 30 gram, tempe mendoan 40 gram, jeruk 75 gram",
+    "expected_score_range": [15, 40],
+    "observed_score": 25.1,
+    "notes": "Porsi menengah, variasi protein + sayur + buah. Skor rendah karena target AKG SD_4_6 cukup tinggi."
+  },
+  {
+    "scenario": "Jajanan Ringan - Tidak Seimbang",
+    "education_level": "SD_4_6",
+    "text": "Mie goreng instan 100 gram, sosis goreng 50 gram, minuman rasa buah 200 ml, coklat batang 30 gram",
+    "expected_score_range": [5, 35],
+    "observed_score": 17.8,
+    "notes": "Makanan tinggi lemak & karbo, minim gizi, banyak bahan olahan."
+  },
+  {
+    "scenario": "Sarapan Praktis",
+    "education_level": "SMA",
+    "text": "Roti tawar 2 lembar, telur mata sapi 2 butir, susu 200 ml, pisang 1 buah",
+    "expected_score_range": [5, 30],
+    "observed_score": 12.6,
+    "notes": "Sarapan sederhana: karbo + protein + kalsium + buah. Skor rendah karena target AKG SMA sangat tinggi untuk ukuran satu porsi sarapan."
+  },
+  {
+    "scenario": "MBG Hemat - Tahu Tempe Sayur",
+    "education_level": "SD_4_6",
+    "text": "Nasi putih 150 gram, tahu goreng 50 gram, tempe bacem 50 gram, sayur bayam bening 100 gram",
+    "expected_score_range": [30, 55],
+    "observed_score": 39.0,
+    "notes": "Menu murah meriah: protein nabati + serat, tanpa protein hewani."
+  },
+  {
+    "scenario": "Ekstrem - Porsi Besar",
+    "education_level": "SMA",
+    "text": "Nasi putih 500 gram, ayam goreng 300 gram, telur dadar 200 gram, tempe goreng 150 gram, tahu goreng 150 gram, sayur asem 300 gram, es buah 250 ml",
+    "expected_score_range": [80, 100],
+    "observed_score": 96.5,
+    "notes": "Porsi besar untuk atlet/laki-laki dewasa, semua gizi terpenuhi berlebih. Skor nyaris sempurna."
+  },
+  {
+    "scenario": "Ekstrem - Porsi Sangat Kecil",
+    "education_level": "SMP",
+    "text": "Nasi putih 30 gram, telur rebus 25 gram, wortel rebus 15 gram",
+    "expected_score_range": [5, 30],
+    "observed_score": 11.3,
+    "notes": "Porsi sangat kecil, semua gizi kurang."
+  },
+  {
+    "scenario": "Menu Daerah - Padang",
+    "education_level": "SMA",
+    "text": "Nasi putih 200 gram, rendang daging 75 gram, sambal ijo 20 gram, daun singkong rebus 50 gram, gulai nangka 50 gram, kerupuk jangek 10 gram",
+    "expected_score_range": [15, 40],
+    "observed_score": 25.5,
+    "notes": "Masakan Padang: protein dari rendang, serat dari daun singkong. Skor terbatas karena lemak tinggi, sayur kurang variasi."
+  },
+  {
+    "scenario": "Menu Daerah - Jawa",
+    "education_level": "SMP",
+    "text": "Nasi putih 200 gram, pecel lele 1 ekor, lalapan mentimun kemangi 30 gram, sambal terasi 10 gram, nasi putih tambahan 100 gram",
+    "expected_score_range": [15, 40],
+    "observed_score": 23.7,
+    "notes": "Pecel lele khas Jawa: protein dari lele, kurang sayur. Skor rendah karena minim serat."
+  },
+  {
+    "scenario": "Menu Daerah - Sunda",
+    "education_level": "SMP",
+    "text": "Nasi liwet 200 gram, ikan asin 30 gram, lalaban mentah 50 gram, sambal terasi 10 gram, sayur asem 100 gram, tahu sumedang 50 gram",
+    "expected_score_range": [25, 50],
+    "observed_score": 37.7,
+    "notes": "Menu Sunda: banyak lalaban segar, sayur asem, protein dari ikan asin + tahu."
+  },
+  {
+    "scenario": "Full Makan Sehari (MBG)",
+    "education_level": "SMP",
+    "text": "Nasi putih 150 gram, ayam goreng 75 gram, tumis buncis wortel 75 gram, tempe goreng 40 gram, pisang 75 gram, susu 200 ml",
+    "expected_score_range": [20, 45],
+    "observed_score": 30.8,
+    "notes": "Standar satu porsi MBG: karbo + protein hewani + nabati + sayur + buah + susu. Satu porsi belum cukup untuk memenuhi AKG harian penuh."
+  },
+  {
+    "scenario": "Buah & Sayur Saja (Diet)",
+    "education_level": "SMA",
+    "text": "Sup sayur 200 gram, salad buah 150 gram, jus jeruk 200 ml, alpukat 100 gram, pisang 100 gram",
+    "expected_score_range": [5, 25],
+    "observed_score": 6.8,
+    "notes": "Hanya sayur + buah: serat tinggi, vitamin tinggi, tapi protein dan karbo sangat rendah."
+  },
+  {
+    "scenario": "Tinggi Lemak - Makanan Cepat Saji",
+    "education_level": "SMA",
+    "text": "Burger ayam 200 gram, kentang goreng 150 gram, ayam goreng tepung 100 gram, minuman soda 300 ml, es krim 100 gram",
+    "expected_score_range": [5, 30],
+    "observed_score": 11.6,
+    "notes": "Fast food: tinggi lemak & garam, rendah serat, vitamin, mineral."
+  }
+]

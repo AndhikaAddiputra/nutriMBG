@@ -50,3 +50,10 @@ async def get_foods(
 
     result = await db.execute(query)
     return list(result.scalars().all())
+
+
+@router.get("/kabupatens", response_model=list[str])
+async def get_kabupatens(db: AsyncSession = Depends(get_db)):
+    query = select(LocalCatalogItem.kabupaten).distinct().order_by(LocalCatalogItem.kabupaten.asc())
+    result = await db.execute(query)
+    return [row[0] for row in result.all()]

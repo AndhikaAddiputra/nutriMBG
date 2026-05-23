@@ -8,6 +8,8 @@ BACKEND_ROOT = Path(__file__).resolve().parents[1]
 if str(BACKEND_ROOT) not in sys.path:
     sys.path.insert(0, str(BACKEND_ROOT))
 
+import bcrypt
+
 from app.db.base import Base
 from app.db.session import AsyncSessionLocal, engine
 from app.models.entities import (
@@ -19,6 +21,9 @@ from app.models.entities import (
     Recommendation,
     User,
 )
+
+def _hash_pw(password: str) -> str:
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
 
 def normalize_name(name: str) -> str:
@@ -124,21 +129,31 @@ async def seed() -> None:
                 )
         session.add_all(akg_rows)
 
-        demo_user = User(
-            full_name="Demo Koordinator",
-            email="demo@nutrimbg.local",
-            password_hash="dummy-hash",
+        demo_koor = User(
+            full_name="Budi Koordinator",
+            email="koor@nutrimbg.go.id",
+            password_hash=_hash_pw("koor123"),
             role="coordinator",
             province="Jawa Barat",
             kabupaten="Kabupaten Bandung",
             default_education_level="SMP",
             is_active=True,
         )
-        session.add(demo_user)
+        demo_admin = User(
+            full_name="Sistem Admin",
+            email="admin@nutrimbg.go.id",
+            password_hash=_hash_pw("admin123"),
+            role="admin",
+            province="DKI Jakarta",
+            kabupaten="Pusat",
+            default_education_level="SMA",
+            is_active=True,
+        )
+        session.add_all([demo_koor, demo_admin])
         await session.flush()
 
         analysis = MenuAnalysis(
-            user_id=demo_user.id,
+            user_id=demo_koor.id,
             menu_text="Nasi putih, ayam goreng, bayam, pisang",
             education_level="SMP",
             score_total=68.5,

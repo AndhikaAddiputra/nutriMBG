@@ -37,20 +37,36 @@ def create_weekly_report_pdf(data: dict) -> bytes:
     elements.append(Spacer(1, 0.2 * inch))
 
     # 2. Daily Menu Table
+    menu_style = ParagraphStyle('MenuCell', parent=styles['Normal'], fontSize=8, leading=11, wordWrap='CJK')
+    date_style = ParagraphStyle('DateCell', parent=styles['Normal'], fontSize=9, alignment=1)
+    score_style = ParagraphStyle('ScoreCell', parent=styles['Normal'], fontSize=9, alignment=1)
+    
     table_data = [['Tanggal', 'Menu', 'Skor Gizi', 'Status']]
     for day in data['daily_menus']:
         status = day['status']
-        table_data.append([day['date'], day['menu'], str(day['score']), status])
+        table_data.append([
+            Paragraph(day['date'], date_style),
+            Paragraph(day['menu'], menu_style),
+            Paragraph(str(day['score']), score_style),
+            Paragraph(status, score_style),
+        ])
         
     # Table styling with dynamic color coding
-    t = Table(table_data, colWidths=[1.2*inch, 2.5*inch, 1*inch, 1.5*inch])
+    t = Table(table_data, colWidths=[1.2*inch, 3.0*inch, 0.9*inch, 1.1*inch])
     table_style = [
         ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#d3d3d3')),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
+        ('ALIGN', (0, 1), (0, -1), 'CENTER'),
+        ('ALIGN', (2, 1), (3, -1), 'CENTER'),
         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
         ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
         ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('TOPPADDING', (0, 0), (-1, -1), 4),
+        ('BOTTOMPADDING', (0, 1), (-1, -1), 4),
+        ('LEFTPADDING', (0, 0), (-1, -1), 6),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 6),
         ('GRID', (0, 0), (-1, -1), 1, colors.black)
     ]
     

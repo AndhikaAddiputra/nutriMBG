@@ -8,6 +8,8 @@ from typing import Optional
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from sqlalchemy import text as sa_text
+
 from app.core.settings import settings
 from app.models.rate_limit_log import RateLimitLog
 
@@ -26,10 +28,11 @@ class RateLimitResult:
 
 
 class RateLimiter:
-    def __init__(self, limit: int, backend: str = "auto", redis_url: Optional[str] = None) -> None:
+    def __init__(self, limit: int, backend: str = "auto", redis_url: Optional[str] = None, scope: str = "global") -> None:
         self.limit = limit
         self.backend = backend.lower()
         self.redis_url = redis_url
+        self.scope = scope
         self._redis_client = None
         self._memory_lock = Lock()
         self._memory_counts: dict[str, int] = {}
@@ -95,11 +98,15 @@ class RateLimiter:
     async def _check_db(self, db: AsyncSession, user_id: int) -> RateLimitResult:
         today = self._current_date()
         existing = await db.execute(
-            select(RateLimitLog).where(RateLimitLog.user_id == user_id, RateLimitLog.rate_date == today)
+            select(RateLimitLog).where(
+                RateLimitLog.user_id == user_id,
+                RateLimitLog.scope == self.scope,
+                RateLimitLog.rate_date == today,
+            )
         )
         record = existing.scalar_one_or_none()
         if record is None:
-            record = RateLimitLog(user_id=user_id, rate_date=today, count=1)
+            record = RateLimitLog(user_id=user_id, scope=self.scope, rate_date=today, count=1)
             db.add(record)
             await db.flush()
             count = 1
@@ -130,7 +137,7 @@ class RateLimiter:
         )
 
     def _redis_key(self, user_id: int) -> str:
-        return f"ratelimit:{user_id}:{self._day_key()}"
+        return f"ratelimit:{self.scope}:{user_id}:{self._day_key()}"
 
     def _memory_key(self, user_id: int) -> str:
         return self._redis_key(user_id)
@@ -141,6 +148,7 @@ class RateLimiter:
 
 
 _rate_limiter: Optional[RateLimiter] = None
+_analyze_rate_limiter: Optional[RateLimiter] = None
 
 
 def get_rate_limiter() -> RateLimiter:
@@ -150,5 +158,18 @@ def get_rate_limiter() -> RateLimiter:
             limit=settings.rate_limit_limit,
             backend=settings.rate_limit_backend,
             redis_url=settings.redis_url,
+            scope="global",
         )
     return _rate_limiter
+
+
+def get_analyze_rate_limiter() -> RateLimiter:
+    global _analyze_rate_limiter
+    if _analyze_rate_limiter is None:
+        _analyze_rate_limiter = RateLimiter(
+            limit=10,
+            backend=settings.rate_limit_backend,
+            redis_url=settings.redis_url,
+            scope="analyze",
+        )
+    return _analyze_rate_limiter

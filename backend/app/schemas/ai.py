@@ -29,9 +29,11 @@ class RecommendResponse(BaseModel):
 class ClassifyMenuRequest(BaseModel):
     text: str = Field(min_length=1, max_length=500)
     education_level: str = Field(min_length=2, max_length=10)
+    kabupaten: str = ""
 
 
 class ClassifyMenuResponse(BaseModel):
+    analysis_id: int
     items: List[ParsedIngredient]
     totals: Dict[str, float]
     ratios: Dict[str, float]

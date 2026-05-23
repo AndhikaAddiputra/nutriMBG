@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional
+from typing import List, Optional
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -22,8 +22,15 @@ class Settings(BaseSettings):
     gemini_model: str = "gemini-2.5-flash"
     gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta"
     ollama_host: str = "http://localhost:11434"
+    ollama_model: str = "llama3:8b"
+    recommender_provider: str = "gemini"
     dataset_dir: str = str(ROOT_DIR / "dataset")
     classifier_model_path: str = str(ROOT_DIR / "backend" / "artifacts" / "classifier.joblib")
+    cors_origins: List[str] = [
+        "http://localhost:5173",
+        "http://localhost:8501",
+        "http://localhost:3000",
+    ]
 
     model_config = SettingsConfigDict(env_file=ENV_FILE, env_file_encoding="utf-8")
 
