@@ -27,12 +27,7 @@ services:
     runtime: static
     buildCommand: npm install && npm run build
     staticPublishPath: dist
-    pullRequestPreviewsEnabled: false
     branch: deployment
-    headers:
-      - path: /*
-        name: X-Frame-Options
-        value: DENY
     envVars:
       - key: VITE_API_BASE_URL
         value: https://nutrimbg-api.onrender.com
