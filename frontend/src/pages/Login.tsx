@@ -80,7 +80,7 @@ export default function Login() {
 
         <Form
           name="login"
-          initialValues={{ email: role === 'admin' ? 'admin@nutrimbg.id' : 'koordinator@nutrimbg.id', password: 'password123' }}
+            initialValues={{ email: role === 'admin' ? 'admin@nutrimbg.go.id' : 'koor@nutrimbg.go.id', password: role === 'admin' ? 'admin123' : 'koor123' }}
           onFinish={onFinish}
           layout="vertical"
         >
