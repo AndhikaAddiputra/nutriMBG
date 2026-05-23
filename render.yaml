@@ -34,6 +34,5 @@ services:
 
 databases:
   - name: nutrimbg-db
-    databaseType: postgresql
     plan: free
     ipAllowList: []
