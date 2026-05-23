@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from app.api.admin.food_items import router as admin_food_router
+from app.api.admin.local_catalog import router as admin_local_catalog_router
 from app.api.admin.nutrition_akg import router as admin_akg_router
 from app.api.ai import router as ai_router
 from app.api.health import router as health_router
@@ -23,6 +24,8 @@ app.include_router(reports_router)
 app.include_router(history_router)
 app.include_router(admin_food_router)
 app.include_router(admin_akg_router)
+app.include_router(admin_local_catalog_router)  # F23: local catalog management
+
 
 @app.get("/")
 def root() -> dict:

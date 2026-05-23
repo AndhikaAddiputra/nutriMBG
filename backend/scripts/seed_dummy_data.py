@@ -19,7 +19,7 @@ from app.models.entities import (
     Recommendation,
     User,
 )
-
+from app.models.local_catalog import LocalIngredientCatalog
 
 def normalize_name(name: str) -> str:
     return name.lower().strip()
@@ -34,6 +34,7 @@ async def seed() -> None:
         await session.execute(delete(MenuIngredient))
         await session.execute(delete(MenuAnalysis))
         await session.execute(delete(LocalCatalogItem))
+        await session.execute(delete(LocalIngredientCatalog))  # NEW
         await session.execute(delete(NutritionAKG))
         await session.execute(delete(FoodItem))
         await session.execute(delete(User))
@@ -96,6 +97,35 @@ async def seed() -> None:
                     )
                 )
         session.add_all(catalog_rows)
+        
+        unavailable_foods_by_region = {
+            "Kabupaten Bandung": {"Ikan Lele"},
+            "Kabupaten Sleman":  {"Kangkung"},
+            "Kabupaten Bogor":   {"Ayam Goreng"},
+            "Kabupaten Sidoarjo":{"Wortel"},
+            "Kabupaten Gowa":    {"Tempe"},
+        }
+        unavailable_months_by_food = {
+            "Ikan Lele":   [6, 7],
+            "Kangkung":    [12, 1, 2],
+            "Wortel":      [7, 8],
+        }
+
+        new_catalog_rows = []
+        for kabupaten in pilot_kabupaten:
+            unavailable = unavailable_foods_by_region[kabupaten]
+            for food_name, food_id in food_id_by_name.items():
+                is_avail = food_name not in unavailable
+                months = unavailable_months_by_food.get(food_name) if not is_avail else None
+                new_catalog_rows.append(
+                    LocalIngredientCatalog(
+                        district_id=kabupaten,
+                        food_item_id=food_id,
+                        is_available=is_avail,
+                        unavailable_months=months,
+                    )
+                )
+        session.add_all(new_catalog_rows)
 
         akg_targets = {
             "SD_1_3": {"protein": 35.0, "carbohydrate": 220.0, "fat": 62.0, "fiber": 16.0, "iron": 8.0, "vitamin_a": 500.0},

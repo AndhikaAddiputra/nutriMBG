@@ -61,7 +61,7 @@ def check_auth_redirect():
 def require_auth(allowed_roles=None):
     if "auth_token" not in st.session_state:
         st.warning("Anda harus login untuk mengakses halaman ini.")
-        st.switch_page("pages/01_Login.py")
+        st.switch_page("pages/Login.py")
     
     current_role = st.session_state.get("user_role")
     

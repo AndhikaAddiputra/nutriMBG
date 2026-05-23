@@ -26,6 +26,10 @@ from app.schemas.ai import (
     RecommendRequest,
     RecommendResponse,
 )
+from app.services.recommender_service import (
+    get_local_catalog_for_district,
+    recommend_for_district,
+)
 
 router = APIRouter(tags=["ai"])
 
@@ -59,26 +63,6 @@ def _fallback_akg_level(education_level: str) -> str:
     if level in {"SD", "SMP", "SMA"}:
         return level
     return level
-
-
-async def _load_food_names_from_db(db: AsyncSession, kabupaten: str | None) -> list[str]:
-    if kabupaten:
-        query = (
-            select(FoodItem.name)
-            .join(LocalCatalogItem, LocalCatalogItem.food_item_id == FoodItem.id)
-            .where(
-                LocalCatalogItem.kabupaten == kabupaten,
-                LocalCatalogItem.is_available.is_(True),
-                FoodItem.is_active.is_(True),
-            )
-            .order_by(FoodItem.name.asc())
-        )
-    else:
-        query = select(FoodItem.name).where(FoodItem.is_active.is_(True)).order_by(FoodItem.name.asc())
-
-    result = await db.execute(query)
-    names = [row[0] for row in result.all() if row and row[0]]
-    return list(dict.fromkeys(names))
 
 
 @router.post("/parse", response_model=ParseMenuResponse, dependencies=[Depends(check_rate_limit)])
@@ -163,15 +147,17 @@ async def analyze_manual_endpoint(
         ratios = compute_ratios(totals, akg_targets)
         labels = {nutrient: label_deficiency(ratio) for nutrient, ratio in ratios.items()}
         score = predict_score(ratios)
-        local_catalog = await _load_food_names_from_db(db, kabupaten)
+
+        # F16: Use district-aware local catalog filtered by LocalIngredientCatalog
         try:
-            recommendations = await generate_menu_alternatives(
+            recommendations = await recommend_for_district(
+                db=db,
                 deficiencies=labels,
-                local_catalog=local_catalog,
+                district_id=kabupaten,
                 count=payload.count,
             )
         except (RuntimeError, ValueError):
-            logging.exception("Failed to generate menu recommendations for manual analysis")
+            logging.exception("Failed to generate district-filtered menu recommendations")
             recommendations = []
     except (RuntimeError, ValueError, FileNotFoundError) as exc:
         logging.exception("Error in analyze_manual_endpoint")

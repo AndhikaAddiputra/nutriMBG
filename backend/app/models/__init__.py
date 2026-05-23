@@ -7,6 +7,7 @@ from app.models.entities import (
     Recommendation,
     User,
 )
+from app.models.local_catalog import LocalIngredientCatalog
 from app.models.rate_limit_log import RateLimitLog
 
 __all__ = [
@@ -14,6 +15,7 @@ __all__ = [
     "NutritionAKG",
     "FoodItem",
     "LocalCatalogItem",
+    "LocalIngredientCatalog",
     "MenuAnalysis",
     "MenuIngredient",
     "Recommendation",
