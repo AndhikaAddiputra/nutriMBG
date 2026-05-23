@@ -1,6 +1,8 @@
+import json
 from pathlib import Path
 from typing import List, Optional
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -31,6 +33,13 @@ class Settings(BaseSettings):
         "http://localhost:8501",
         "http://localhost:3000",
     ]
+
+    @field_validator("cors_origins", mode="before")
+    @classmethod
+    def parse_cors_origins(cls, v: object) -> object:
+        if isinstance(v, str):
+            return json.loads(v)
+        return v
 
     model_config = SettingsConfigDict(env_file=ENV_FILE, env_file_encoding="utf-8")
 
