@@ -3,7 +3,7 @@ services:
     name: nutrimbg-api
     runtime: docker
     dockerfilePath: backend/Dockerfile
-    branch: main
+    branch: deployment
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -22,20 +22,23 @@ services:
       - key: CORS_ORIGINS
         value: '["https://nutrimbg.onrender.com","http://localhost:5173"]'
 
-  - type: static
+  - type: static_site
     name: nutrimbg
     runtime: node
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     pullRequestPreviewsEnabled: false
-    branch: main
+    branch: deployment
     headers:
       - path: /*
         name: X-Frame-Options
         value: DENY
     envVars:
       - key: VITE_API_BASE_URL
-        value: https://nutrimbg-api.onrender.com
+        fromService:
+          type: web
+          name: nutrimbg-api
+          property: host
 
 databases:
   - name: nutrimbg-db
